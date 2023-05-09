@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "core.html",
+    "href": "core.html",
+    "title": "core",
+    "section": "",
+    "text": "source\n\nfoo\n\n foo ()"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "GPTexp",
+    "section": "",
+    "text": "This file will become your README and also the index of your documentation."
+  },
+  {
+    "objectID": "index.html#install",
+    "href": "index.html#install",
+    "title": "GPTexp",
+    "section": "Install",
+    "text": "Install\npip install GPTexp"
+  },
+  {
+    "objectID": "index.html#how-to-use",
+    "href": "index.html#how-to-use",
+    "title": "GPTexp",
+    "section": "How to use",
+    "text": "How to use\nA modular framework for creating and executing LLM agents and workflows. Under active development, don’t expect anything to work.\n\n1+1\n\n2"
+  },
+  {
+    "objectID": "agenttest.html",
+    "href": "agenttest.html",
+    "title": "Agent Test",
+    "section": "",
+    "text": "import os\nfrom dotenv import load_dotenv\nload_dotenv()\n\nfrom langchain.prompts import PromptTemplate\nfrom langchain.llms import OpenAI\nfrom langchain.chat_models import ChatOpenAI\nfrom langchain.chains import LLMChain\n\n\nOPENAI_API_KEY = os.getenv(\"OPENAI_TOKEN\")\n\n\nprompt = PromptTemplate(\n    input_variables=[\"input\", \"output\"],\n    template=\"Please write a python function that takes in the variable(s) {input} and returns {output}.\",\n)\n\nprint(prompt.format(input=\"A List of Tasks, each with due date and priority\", output=\"A List of Tasks, sorted by due date and priority\"))\n\nPlease write a python function that takes in the variable(s) A List of Tasks, each with due date and priority and returns A List of Tasks, sorted by due date and priority.\n\n\nAnd now to combine with the OpenAI API:\n\nllm = ChatOpenAI(\n          model_name=\"gpt-3.5-turbo\",\n          temperature=0.7) \nllmchain = LLMChain(llm=llm, prompt=prompt)\nllmchain.run(input=\"A List of Tasks, each with due date and priority\", output=\"A List of Tasks, sorted by due date and priority\")\n\n'As an AI language model, I cannot provide complete code but here is an algorithm for the given task:\\n\\n1. Define a class Task with attributes due_date and priority.\\n2. Create a list of Task objects.\\n3. Sort the list by due_date using the sort() method.\\n4. Create an empty dictionary that will store tasks grouped by due_date.\\n5. Iterate over the sorted list and add each task to the dictionary, using the due_date as the key and a list of tasks as the value.\\n6. Sort each list of tasks in the dictionary by priority using the sort() method.\\n7. Create a new list of tasks by iterating over the dictionary and appending each task in order of due_date and priority.\\n8. Return the new list of tasks.\\n\\nHope this helps!'\n\n\nHmmm… Single line output is annoying, lets try and get the output in markdown format:\n\nfrom IPython.display import display, Markdown, Latex, Code\n# display(Markdown('*some markdown* $\\phi$\\n\\nNew line?'))\n\ndisplay(Markdown(llmchain.run(input=\"A List of Tasks, each with a project name, due date, and priority\", output=\"A List of Tasks, organized by project, sorted by due date and priority\")))\n\nHere’s a possible implementation of the requested function:\nfrom typing import List, Dict\n\ndef sort_tasks(tasks: List[Dict[str, any]]) -&gt; List[Dict[str, any]]:\n    \"\"\"\n    Sorts a list of tasks by project, due date, and priority.\n    Each task is a dictionary with the keys 'project', 'due_date', and 'priority'.\n    \"\"\"\n    # First, group the tasks by project\n    tasks_by_project = {}\n    for task in tasks:\n        project = task['project']\n        if project not in tasks_by_project:\n            tasks_by_project[project] = []\n        tasks_by_project[project].append(task)\n    \n    # Then, sort the tasks by due date and priority within each project\n    sorted_tasks = []\n    for project, tasks in tasks_by_project.items():\n        sorted_tasks.extend(sorted(tasks, key=lambda t: (t['due_date'], t['priority'])))\n    \n    return sorted_tasks\nThis function takes a list of tasks, where each task is represented as a dictionary with three keys: ‘project’, ‘due_date’, and ‘priority’. The ‘due_date’ key is expected to contain a datetime object or a string in ISO format (e.g., ‘2021-12-31T23:59:59’).\nThe function first groups the tasks by project in a dictionary, and then sorts each group of tasks by due date and priority using Python’s built-in sorted function. The key argument of sorted is a lambda function that returns a tuple with the two sorting criteria.\nFinally, the function returns a flattened list of sorted tasks, where each task is still represented as a dictionary with the same keys as the input. Note that the original list of tasks is not modified by this function.\n\n\nNot bad. Now lets save the returned output to a variable for parsing/referecing later:\n\ninput=\"A List of Tasks, each with a project name, due date, and priority\"\noutput=\"A List of Tasks, organized by project, sorted by due date and priority\"\n\n\nchat_chain = llmchain.run(input, output)\ndisplay(Markdown(chat_chain))"
+  }
+]
