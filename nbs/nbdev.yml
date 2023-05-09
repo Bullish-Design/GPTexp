@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "GPTexp"
+  site-url: "https://Bullish-Design.github.io/GPTexp"
+  description: "Experimenting with Large Language Models."
+  repo-branch: main
+  repo-url: "https://github.com/Bullish-Design/GPTexp"
